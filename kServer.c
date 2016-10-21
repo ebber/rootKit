@@ -25,7 +25,7 @@
 
 #define MAX_CLIENTS 1
 #define DEFAULT_PORT 2325  //handoff maybe ?
-#define CONNECT_PORT 1337
+#define CONNECT_PORT 1333
 #define MODULE_NAME "kServer"
 
 struct socket listen_sock;
@@ -70,20 +70,28 @@ int server_listen(void) {
 	printk(KERN_ERR "LISTEN ERROR\n");
 	return -1;
     }
+ printk(KERN_INFO "Listening");
 
    //the socket we will pass off the client too
    csock = (struct socket*) kmalloc(sizeof(struct socket), GFP_KERNEL);
    //possible that 3rd arg is length of connection socket 
-   err = socket->ops->accept(socket, csock, O_NONBLOCK);
+   int go=1;
+   while(go) {
+   err = socket->ops->accept(socket, csock, 0);
     if(err<0) {
-	printk(KERN_ERR "ACCEPT ERROR\n");
-        sock_release(csock);
-        kfree(csock);
-	return err;
+	if(err!=512) {
+	  printk(KERN_ERR "ACCEPT ERROR %d\n", err);
+	  return err;
+	} else { go=0;}
+	
+        //sock_release(csock);
+        //kfree(csock);
+    }
     }
 
    socket_write(csock, "PLS\n\0",5);
-
+    sock_release(socket);
+    kfree(socket);
     sock_release(csock);
     kfree(csock);
     return 0;

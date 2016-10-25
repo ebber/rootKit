@@ -4,3 +4,5 @@ module.*
 *.mod.c
 .tmp_versions/*
 *.cmd
+Module.*
+modules.*

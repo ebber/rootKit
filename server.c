@@ -53,13 +53,16 @@ int main(int argc, char ** argv) {
    int client_fd = accept(sock_fd, NULL, NULL);
    printf("Connected");
 
+   dup2(client_fd, STDOUT_FILENO);
    write(client_fd, "Connected", 10);
+   printf("test");
    char buffer[1000];
    int len;
    while(-1!= (len = read(client_fd, buffer, sizeof(buffer)-1)) ) {
       buffer[len] = '\0';
     int i = 0;
-    while(buffer[i]!='\0'){
+    int len = strlen(buffer);
+    while(buffer[i]!='\0' && i<=len){
 	if(buffer[i]=='\n'){
 	    buffer[i]='\0';
         }

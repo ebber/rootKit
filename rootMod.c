@@ -31,7 +31,8 @@ static int ls_exec( void )
         "PATH=/sbin:/bin:/usr/sbin:/usr/bin", NULL };
 
    printk("make call i \n");
-   ret = call_usermodehelper(argv[0], argv, envp, UMH_WAIT_PROC);
+   //ret = call_usermodehelper(argv[0], argv, envp, UMH_NO_WAIT);
+   ret = call_usermodehelper(argv[0], argv, envp, UMH_WAIT_EXEC);
    printk("%d \n",ret);
    return ret;
   sub_info = call_usermodehelper_setup( argv[0], argv, envp, GFP_ATOMIC, NULL, NULL,NULL);
@@ -41,7 +42,7 @@ static int ls_exec( void )
 	return -ENOMEM;
   }
   printk("SETUP SUCCEEDED");
-  return call_usermodehelper_exec( sub_info, UMH_WAIT_PROC );
+  return call_usermodehelper_exec( sub_info, UMH_NO_WAIT );
 }
 
 

@@ -110,7 +110,8 @@ char** strsplit(char* str, char delim, size_t* numTokens) {
   
     splitStr[0] = strtok_r(str, &delim, &savePtr); 
     while( (splitStr[*numTokens] = strtok_r(NULL, &delim, &savePtr)) ) {
-	splitStr = realloc(splitStr, sizeof(char*) * (*numTokens++));
+	(*numTokens)++;
+	splitStr = realloc(splitStr, sizeof(char*) * (*numTokens));
     } 
  return splitStr; 
 }
